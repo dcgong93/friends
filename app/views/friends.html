@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="eng">
+  <head>
+    <title>Register</title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+  </head>
+  <body>
+    <!-- BEGINNING OF CONTAINER -->
+    <div class="container">
+      <!-- HEADER -->
+      <div class="row">
+        <div class="text-left col-sm-6">
+          <h3>Hello, {{user.alias}}!</h3>
+        </div>
+        <div class="text-right col-sm-6">
+          <a href="/logout"><u>Logout</u></a>
+        </div>
+      <div><br /><br /><br />
+      <!-- END HEADER -->
+      <!-- FRIENDS TABLE -->
+      <div id="friends_table" class="row">
+        {% if not friends %}
+          <p>Add Some Friends</p>
+        {% endif %}
+        {% if friends %}
+        <p>Here is the list of your friends:</p>
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>Alias</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for friend in friends %}
+            <tr>
+              <td>{{friend['alias']}}</td>
+              <td>
+                <ul class="list-inline">
+                  <li><a href="/profile/{{friend.id}}"><u>View Profile</u></a></li>
+                  <li><a href="/remove/{{friend.id}}"><u>Remove as Friend</u></a></li>
+                </ul>
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+        {% endif %}
+
+      </div>
+      <!-- END FRIENDS TABLE -->
+      <!-- ALL OTHER USERS -->
+      <div id="others_table">
+        <p>Other Users not on your friend's list:</p>
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>Alias</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+          {% if other_users %}
+            {% for other in other_users %}
+            <tr>
+              <td><a href="/profile/{{other.id}}" ><u>{{other['alias']}}</u></a></td>
+              <td>
+                  <a href="/add/{{other.id}}" class="btn btn-default">Add As Friend</a>
+              </td>
+            </tr>
+            {% endfor %}
+          {% endif %}
+          </tbody>
+        </table>
+      </div>
+      <!-- END OTHER USERS -->
+    </div>
+  </body>
+</html>
